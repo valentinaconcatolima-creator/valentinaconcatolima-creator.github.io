@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bairro Circular — Reciclar transforma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js"></script>
+ </head>
+ <body>
+  <div class="shell">
+   <aside class="sidebar">
+    <a class="brand" href="#inicio" aria-label="Bairro Circular, ir ao início"><span class="brand-mark"><i data-lucide="recycle"></i></span><span>Bairro Circular</span></a>
+    <nav class="nav" aria-label="Navegação principal">
+     <a class="active" href="#inicio"><i data-lucide="layout-dashboard"></i>Visão geral</a> <a href="#registrar"><i data-lucide="plus-circle"></i>Registrar</a> <a href="#conquistas"><i data-lucide="award"></i>Conquistas</a> <a href="#recompensas"><i data-lucide="ticket"></i>Recompensas</a> <a href="#caminhao"><i data-lucide="truck"></i>Caminhão</a>
+    </nav>
+    <div class="sidebar-note">
+     <i data-lucide="sprout"></i><strong>Pequenos atos, grande impacto.</strong>Separe, registre e acompanhe sua evolução a cada reciclagem.
+    </div>
+   </aside>
+   <main id="inicio">
+    <header class="topbar">
+     <div>
+      <div class="eyebrow">Sua comunidade mais verde</div>
+      <h1>Olá, vizinhança! 👋</h1>
+     </div>
+     <span class="demo-pill"><span class="dot"></span> Experiência demonstrativa</span>
+    </header>
+    <section class="hero" aria-labelledby="hero-title">
+     <div class="hero-content">
+      <div class="eyebrow">TRANSFORME HÁBITOS EM RECOMPENSAS</div>
+      <h2 id="hero-title">Cada reciclagem faz o bairro avançar.</h2>
+      <p>Registre seus materiais, suba de nível e troque seus pontos por benefícios na vizinhança.</p>
+      <a class="primary" href="#registrar"><i data-lucide="plus"></i> Registrar reciclagem</a>
+     </div>
+     <div class="hero-art" aria-hidden="true">
+      <i data-lucide="recycle"></i>
+     </div>
+    </section>
+    <section class="stats" aria-label="Seu progresso">
+     <div class="stat card">
+      <div class="stat-top">
+       <span>Pontos disponíveis</span><span class="icon-box"><i data-lucide="sparkles"></i></span>
+      </div>
+      <strong id="points">0</strong><small>Ganhe pontos reciclando</small>
+     </div>
+     <div class="stat card">
+      <div class="stat-top">
+       <span>Seu nível</span><span class="icon-box"><i data-lucide="trending-up"></i></span>
+      </div>
+      <strong id="level">1 · Semente</strong>
+      <div class="progress" aria-label="Progresso para o próximo nível">
+       <span id="level-progress"></span>
+      </div>
+      <small id="progress-label">Faltam 200 pontos para o próximo nível</small>
+     </div>
+     <div class="stat card">
+      <div class="stat-top">
+       <span>Material reciclado</span><span class="icon-box"><i data-lucide="leaf"></i></span>
+      </div>
+      <strong id="weight">0 kg</strong><small id="frequency">0 registros realizados</small>
+     </div>
+    </section>
+    <section id="registrar">
+     <div class="section-head">
+      <div>
+       <h2>Faça sua parte hoje</h2>
+       <p>Uma atitude simples que vale pontos de verdade no jogo.</p>
+      </div>
+      <span class="section-tag">+ pontos por frequência</span>
+     </div>
+     <div class="main-grid">
+      <div class="form-card card">
+       <h3>Registrar reciclagem</h3>
+       <form id="recycle-form">
+        <div class="form-row">
+         <div>
+          <label for="material">Tipo de material</label><select id="material" required><option value="">Selecione um material</option><option>Plástico</option><option>Metal</option><option>Papel</option><option>Papelão</option><option>Vidro</option><option>Embalagem longa vida</option><option>Eletrônicos</option><option>Pilhas e baterias</option><option>Óleo de cozinha</option><option>Tecido e roupas</option><option>Madeira</option><option>Borracha</option><option>Isopor</option><option>Resíduos orgânicos para compostagem</option><option>Outros recicláveis</option></select>
+         </div>
+         <div>
+          <label for="quantity">Quantidade (kg)</label><input id="quantity" type="number" min="0.1" max="500" step="0.1" placeholder="Ex.: 2,5" required>
+         </div>
+        </div>
+        <p class="field-help">Destine materiais especiais a pontos de coleta adequados. Registre aqui o que você separou.</p>
+        <div class="estimate">
+         <span>Pontos previstos neste registro</span><strong id="estimated-points">+ 0 pts</strong>
+        </div>
+        <button id="submit-recycle" class="primary submit" type="submit"><i data-lucide="check"></i> Confirmar registro</button>
+        <p id="form-message" class="message" role="status" aria-live="polite"></p>
+       </form>
+      </div>
+      <div class="activity-card card">
+       <h3>Atividade recente</h3>
+       <div id="activity-list" class="activity-list">
+        <div class="empty">Seu primeiro registro aparecerá aqui. Vamos começar?</div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <section id="conquistas" class="section">
+     <div class="section-head">
+      <div>
+       <h2>Conquistas para desbloquear</h2>
+       <p>Continue reciclando para completar sua coleção.</p>
+      </div>
+     </div>
+     <div id="achievements" class="achievements"></div>
+    </section>
+    <section id="recompensas" class="section">
+     <div class="section-head">
+      <div>
+       <h2>Recompensas do bairro</h2>
+       <p>Troque seus pontos por vouchers demonstrativos.</p>
+      </div>
+      <span class="section-tag">Parceiros ilustrativos</span>
+     </div>
+     <div class="partners">
+      <article class="partner card">
+       <img id="cafe-photo" src="https://images.pexels.com/photos/22938484/pexels-photo-22938484.jpeg" alt="Interior aconchegante de café em São Paulo" loading="lazy">
+       <div class="partner-body">
+        <div class="partner-title">
+         <h3>Café da Praça</h3>
+         <span class="section-tag">Café</span>
+        </div>
+        <p>Voucher demonstrativo: um café especial.</p>
+        <div class="partner-bottom">
+         <span class="cost">150 pontos</span><button class="secondary redeem" data-voucher="cafe" type="button">Resgatar <i data-lucide="arrow-right"></i></button>
+        </div>
+       </div>
+      </article>
+      <article class="partner card">
+       <img id="lanche-photo" src="https://images.pexels.com/photos/35054704/pexels-photo-35054704.jpeg" alt="Sanduíches grelhados e cappuccino em uma mesa" loading="lazy">
+       <div class="partner-body">
+        <div class="partner-title">
+         <h3>Lanche da Esquina</h3>
+         <span class="section-tag">Lanchonete</span>
+        </div>
+        <p>Voucher demonstrativo: desconto no lanche.</p>
+        <div class="partner-bottom">
+         <span class="cost">250 pontos</span><button class="secondary redeem" data-voucher="lanche" type="button">Resgatar <i data-lucide="arrow-right"></i></button>
+        </div>
+       </div>
+      </article>
+     </div>
+     <p class="fineprint">Os estabelecimentos e vouchers desta experiência são fictícios. Nenhum voucher pode ser utilizado em um comércio real.</p>
+     <p id="voucher-message" class="message" role="status" aria-live="polite"></p>
+     <div id="voucher-list" class="voucher-list"></div>
+    </section>
+    <section id="caminhao" class="section">
+     <div class="section-head">
+      <div>
+       <h2>Caminhão de coleta</h2>
+       <p>Acompanhe a rota demonstrativa pela vizinhança.</p>
+      </div>
+      <span class="section-tag">Localização simulada</span>
+     </div>
+     <div class="tracker">
+      <div class="map-wrap">
+       <div id="map" class="map" role="img" aria-label="Mapa com rota simulada do caminhão de coleta em São Paulo"></div>
+       <span class="map-label">MAPA E TRAJETO SIMULADOS</span>
+      </div>
+      <div class="tracking-info card">
+       <span class="live"><span class="dot"></span> SIMULAÇÃO EM MOVIMENTO</span>
+       <h3 id="truck-status">Em rota de coleta</h3>
+       <p>Posição demonstrativa atualizada automaticamente. Não representa um caminhão real.</p>
+       <div class="distance" id="truck-distance">
+        2,4 km <small>de distância estimada</small>
+       </div>
+       <div id="arrival-alert" class="arrival" role="status" aria-live="polite">Estimativa simulada: aproximadamente 12 minutos até a chegada.</div>
+       <button id="advance-truck" class="secondary" type="button"><i data-lucide="refresh-cw"></i> Avançar simulação</button>
+      </div>
+     </div>
+    </section>
+    <footer class="footer">
+     <span>© Bairro Circular · Juntos por uma cidade mais consciente.</span><span>Jogo demonstrativo · Dados de coleta e parceiros fictícios.</span>
+    </footer>
+   </main>
+  </div>
+  <script src="script.js"></script>
+ </body>
+</html>
